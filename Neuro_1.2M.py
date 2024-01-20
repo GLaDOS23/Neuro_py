@@ -38,7 +38,8 @@ class NeuralNetwork:
             if i == hidden_layers:
                 for i4 in range(hidden_neurons ):                   
                     fw.write(" ".join([str(k) for k in self.weights[i].tolist()[i4]])+"\n")
-                fw.write("!")    
+                fw.write("!")
+   
         fw.close()
         fb = open("biases.txt", "w")
         for i in range(hidden_layers+1):
@@ -99,7 +100,7 @@ class NeuralNetwork:
     def sigmoid(self, x):#функция сигмойда
         return 1 / (1 + np.exp(-x))
     
-    def sigmoid_derivative(self, x):#роизводная сигмойда
+    def sigmoid_derivative(self, x):#производная сигмойда
         return x * (1 - x)
     
     def feedforward(self, X):# прямое распространение
@@ -148,20 +149,21 @@ class NeuralNetwork:
 
 
 
-
-X = np.array([[1,1,0,1,1]])
-y = np.array([[0,0,0,1,1,1]])
-X2 = np.array([[1,1,0,1,1]])
+X= np.array([[1,1],[1,0],[0,1],[0,0]])
+y = np.array([[0,0],[0,1],[1,0],[1,1]])
+#X = np.array([[1,1],])
+#y = np.array([[0,1]])
+X2 = np.array([[1,0]])
 #X = np.array([[0, 0], [0, 1], [1, 0], [1, 1]])
 #y = np.array([[0], [1], [1],[0]])
 #X2 = np.array([[0, 0], [0, 1], [1, 0], [1, 1]])
     
-input_size=5
-output_size=6
-hidden_layers=3
-hidden_neurons=10
+input_size=2
+output_size=2
+hidden_layers=2
+hidden_neurons=2
 epochs=10000
-learning_rate=0.5
+learning_rate=1
 nn = NeuralNetwork(input_size, output_size, hidden_layers, hidden_neurons)
 # инициализируйте веса и смещения для каждого слоя
 
@@ -181,12 +183,12 @@ print("time: ",seconds2 - seconds1)
 out = nn.feedforward(X2)
 
 
-#nn.saving_weights_biases()
+nn.saving_weights_biases()
 
 print(out)
 
 '''
-Настройка нейронки
+Настройки нейронки:
 input_size - количество входов
 output_size - количество нейронов на выходном слое
 hidden_layers - количество внутренних слоёв
@@ -194,6 +196,16 @@ hidden_neurons - количество нейронов на внутреннем
 epochs - количество циклов обучения
 learning_rate - скорость обучения
 
+Основные функции:
+nn.train(X, y, epochs, learning_rate) - запуск обучения нейросети
+nn.feedforward(X) - прямой проход по нейронной сети
+nn.saving_weights_biases() - функция записи параметров нейросети в файл
+nn.reading_from_a_file() - функция чтения параметров нейросети из файла
+*Сохранение происходит в два txt файла weights и biases. После сохранения
+необходимо удалить последний символ в каждом файле.
 
+Основные переменные:
+X - вектор входных значений
+y  - вектор ожидаемых от нейросети значений
 '''
 
